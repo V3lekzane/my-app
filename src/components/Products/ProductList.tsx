@@ -4,7 +4,7 @@ import productsArray from 'utils/productsArray'
 import Valute from 'components/curbutton/Valute'
 import { useStore } from 'context/Provider'
 import { Description } from '@mui/icons-material'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 type Props = {
     addProductToCart: (id: number, count: number) => void
@@ -12,14 +12,19 @@ type Props = {
 
 const ProductList: React.FC<Props> = ({ addProductToCart }) => {
     const { currency, setCurrency } = useStore()
-    const [totalPrice, setTotalPrice] = useState(0)
-
-    useEffect(() => {
-        setTotalPrice(0) // Обнуляем totalPrice при изменении валюты
-    }, [currency])
+    const [totalPrices, setTotalPrices] = useState<{ [key: string]: number }>(
+        {}
+    )
 
     const handleCurrencyChange = (newCurrency: string) => {
         setCurrency(newCurrency)
+    }
+
+    const updateTotalPrice = (currency: string, totalPrice: number) => {
+        setTotalPrices((prevTotalPrices) => ({
+            ...prevTotalPrices,
+            [currency]: totalPrice,
+        }))
     }
 
     return (
@@ -59,6 +64,8 @@ const ProductList: React.FC<Props> = ({ addProductToCart }) => {
                                 ? zlt
                                 : price
 
+                        const totalPrice = totalPrices[currency] || 0
+
                         return (
                             <Grid item xs={12} sm={6} md={4} key={id}>
                                 <ProductListItem
@@ -69,10 +76,11 @@ const ProductList: React.FC<Props> = ({ addProductToCart }) => {
                                     valute={currency}
                                     addProductToCart={(id, count) => {
                                         addProductToCart(id, count)
-                                        setTotalPrice(
-                                            (prevTotalPrice) =>
-                                                prevTotalPrice +
-                                                convertedPrice * count
+                                        const newTotalPrice =
+                                            totalPrice + convertedPrice * count
+                                        updateTotalPrice(
+                                            currency,
+                                            newTotalPrice
                                         )
                                     }}
                                 />
@@ -82,7 +90,7 @@ const ProductList: React.FC<Props> = ({ addProductToCart }) => {
                 )}
             </Grid>
             <Typography variant="h5" align="center">
-                Total: {totalPrice.toFixed(2)} {currency}
+                Total: {totalPrices[currency]?.toFixed(2) || 0} {currency}
             </Typography>
         </>
     )
