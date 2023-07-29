@@ -3,13 +3,11 @@ export type Product = {
     title: string
     description: string
     price: number
-    eur: number
-    usd: number
-    uah: number
-    zlt: number
     valute: string
     capacity: string
+    pricesInCurrencies: { [key: string]: number }
 }
+
 const productsArray: Product[] = [
     {
         id: 1,
@@ -17,11 +15,13 @@ const productsArray: Product[] = [
         description: 'This is iPhone 12...',
         valute: 'EUR',
         price: 750,
-        eur: 750,
-        usd: 1125,
-        uah: 30000,
-        zlt: 3000,
         capacity: 'phone',
+        pricesInCurrencies: {
+            USD: 1125,
+            EUR: 750,
+            UAH: 30000,
+            ZLT: 3000,
+        },
     },
     {
         id: 2,
@@ -29,32 +29,28 @@ const productsArray: Product[] = [
         description: 'This is iPhone 8...',
         valute: 'EUR',
         price: 850,
-        eur: 850,
-        usd: 1275,
-        uah: 34000,
-        zlt: 3400,
         capacity: 'phone',
+        pricesInCurrencies: {
+            USD: 1275,
+            EUR: 850,
+            UAH: 34000,
+            ZLT: 3400,
+        },
     },
     {
         id: 3,
-        title: 'iPhone X ',
-        description: 'This is iPhone X... ',
+        title: 'iPhone X',
+        description: 'This is iPhone X...',
         valute: 'EUR',
         price: 1250,
-        eur: 1250,
-        usd: 1875,
-        uah: 50000,
-        zlt: 5000,
         capacity: 'phone',
+        pricesInCurrencies: {
+            USD: 1875,
+            EUR: 1250,
+            UAH: 50000,
+            ZLT: 5000,
+        },
     },
 ]
 
-export const getProductsObject = (array: Product[]) =>
-    array.reduce(
-        (object, product) => ({
-            ...object,
-            [product.id]: product,
-        }),
-        {}
-    )
 export default productsArray

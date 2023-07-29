@@ -3,7 +3,6 @@ import ProductListItem from './ProductListItem'
 import productsArray from 'utils/productsArray'
 import Valute from 'components/curbutton/Valute'
 import { useStore } from 'context/Provider'
-import { Description } from '@mui/icons-material'
 import { useState } from 'react'
 
 type Props = {
@@ -12,6 +11,7 @@ type Props = {
 
 const ProductList: React.FC<Props> = ({ addProductToCart }) => {
     const { currency, setCurrency } = useStore()
+    const currencies = ['USD', 'EUR', 'UAH', 'ZLT']
     const [totalPrices, setTotalPrices] = useState<{ [key: string]: number }>(
         {}
     )
@@ -20,11 +20,23 @@ const ProductList: React.FC<Props> = ({ addProductToCart }) => {
         setCurrency(newCurrency)
     }
 
-    const updateTotalPrice = (currency: string, totalPrice: number) => {
-        setTotalPrices((prevTotalPrices) => ({
-            ...prevTotalPrices,
-            [currency]: totalPrice,
-        }))
+    const updateTotalPrice = (productId: number, count: number) => {
+        setTotalPrices((prevTotalPrices) => {
+            const updatedPrices = { ...prevTotalPrices }
+            const product = productsArray.find((p) => p.id === productId)
+
+            if (product) {
+                const { pricesInCurrencies } = product
+                currencies.forEach((curr) => {
+                    const convertedPrice = pricesInCurrencies[curr]
+                    const totalForCurrency = updatedPrices[curr] || 0
+                    updatedPrices[curr] =
+                        totalForCurrency + convertedPrice * count
+                })
+            }
+
+            return updatedPrices
+        })
     }
 
     return (
@@ -42,28 +54,12 @@ const ProductList: React.FC<Props> = ({ addProductToCart }) => {
             <Valute onCurrencyChange={handleCurrencyChange} />
             <Grid container spacing={4}>
                 {productsArray.map(
-                    ({
-                        id,
-                        title,
-                        description,
-                        price,
-                        valute,
-                        eur,
-                        usd,
-                        uah,
-                        zlt,
-                    }) => {
-                        const convertedPrice =
-                            currency === 'USD'
-                                ? usd
-                                : currency === 'EUR'
-                                ? eur
-                                : currency === 'UAH'
-                                ? uah
-                                : currency === 'ZLT'
-                                ? zlt
-                                : price
+                    ({ id, title, description, price, valute }) => {
+                        const product = productsArray.find((p) => p.id === id)
+                        if (!product) return null
 
+                        const { pricesInCurrencies } = product
+                        const convertedPrice = pricesInCurrencies[currency]
                         const totalPrice = totalPrices[currency] || 0
 
                         return (
@@ -76,12 +72,7 @@ const ProductList: React.FC<Props> = ({ addProductToCart }) => {
                                     valute={currency}
                                     addProductToCart={(id, count) => {
                                         addProductToCart(id, count)
-                                        const newTotalPrice =
-                                            totalPrice + convertedPrice * count
-                                        updateTotalPrice(
-                                            currency,
-                                            newTotalPrice
-                                        )
+                                        updateTotalPrice(id, count)
                                     }}
                                 />
                             </Grid>

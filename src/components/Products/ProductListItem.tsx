@@ -8,9 +8,9 @@ type Props = {
     description: string
     valute: string
     price: number
-
     addProductToCart: (id: number, count: number) => void
 }
+
 export const ProductListItem = ({
     id,
     title,
@@ -26,7 +26,6 @@ export const ProductListItem = ({
                 <h4 className="product-title">{title}</h4>
                 <div className="product-description">{description}</div>
                 <div className="product-price">
-                    {' '}
                     {valute} {price}
                 </div>
                 <CardActions className="btn-wrap">
@@ -41,4 +40,5 @@ export const ProductListItem = ({
         </Card>
     )
 }
+
 export default ProductListItem

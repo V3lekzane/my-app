@@ -1,13 +1,16 @@
+import React from 'react'
 import ProductList from 'components/Products/ProductList'
 
-type Props = {
+type HomeProps = {
     addProductToCart: (id: number, count: number) => void
 }
-const Home = ({ addProductToCart }: Props) => {
+
+const Home: React.FC<HomeProps> = ({ addProductToCart }) => {
     return (
         <>
             <ProductList addProductToCart={addProductToCart} />
         </>
     )
 }
+
 export default Home
