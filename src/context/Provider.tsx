@@ -10,7 +10,7 @@ const StoreContext = createContext<any>({
 export const useStore = () => useContext(StoreContext)
 
 export default function StoreProvider({ children }: StoreProviderProps) {
-    const [currency, setCurrency] = useState('')
+    const [currency, setCurrency] = useState('UAH')
 
     const value = useMemo(
         () => ({
