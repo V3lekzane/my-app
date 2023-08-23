@@ -1,0 +1,9 @@
+.menu-item {
+    text-decoration: none;
+    color: white;
+}
+
+.menu-item-active {
+    text-decoration: none;
+    color: purple;
+} /*# sourceMappingURL=MenuItem.css.map */

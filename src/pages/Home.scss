@@ -1,0 +1,56 @@
+.home-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.slider-container {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 120vh;
+}
+
+.slider-content {
+    background-color: white;
+    flex: 1;
+    display: flex;
+    transition: transform 0.5s ease;
+    position: relative;
+}
+
+.slider-product {
+    flex: 1;
+    position: relative;
+}
+
+.slider-product img {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+    z-index: 1;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.slider-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.slider-button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+    background-color: white;
+}
+.text {
+    text-align: center;
+    color: white;
+}

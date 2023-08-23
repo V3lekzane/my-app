@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/* Home.scss */
+.home-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  justify-content: space-between; /* Розміщення кнопок ліворуч та праворуч */
+  align-items: center; /* Вертикальне центрування об'єкта у середині */
+  height: 200vh;
+}
+
+.slider-content {
+  background-color: purple;
+  flex: 1;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slider-product {
+  flex: 1;
+  position: relative; /* Зробіть батьківський контейнер відносно */
+  width: 100%;
+  height: 150vh; /* Висота 100% від батьківського контейнера */
+}
+
+/* Налаштування позиції фотографії */
+.slider-product img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 130vh;
+  -o-object-fit: cover;
+     object-fit: cover; /* Зберегти пропорції і обрізати фото за межами контейнера */
+}
+
+/* Стилі для тексту title */
+.product-title {
+  position: absolute;
+  bottom: 10px; /* Відстань від нижнього краю */
+  left: 10px; /* Відстань від лівого краю */
+  background-color: rgba(255, 255, 255, 0.7); /* Прозорий фон для тексту */
+  padding: 5px;
+  border-radius: 5px;
+  color: black; /* Колір тексту */
+  font-size: 18px; /* Розмір шрифту */
+}/*# sourceMappingURL=Home.css.map */
